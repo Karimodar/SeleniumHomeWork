@@ -1,0 +1,41 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class TestCaseFour {
+    public static void main(String[] args) throws InterruptedException {
+	
+	String key = "webdriver.chrome.driver";
+	String path = "C:\\Users\\varsi\\OneDrive\\Desktop\\B7 Selenium\\chromedriver.exe";
+	String url = "https://opensource-demo.orangehrmlive.com";
+
+	System.setProperty(key, path);
+	WebDriver driver = new ChromeDriver();
+	// open browser
+	driver = new ChromeDriver();
+	
+	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	// maximize window
+	driver.manage().window().maximize();
+	driver.get(url);
+	
+	WebElement el = driver.findElement(By.xpath("//*[@placeholder = 'Username']"));
+	el.sendKeys("Admin");
+	WebElement elOne = driver.findElement(By.xpath("//*[@placeholder = 'Password']"));
+	elOne.sendKeys("admin123");
+	WebElement elTwo = driver.findElement(By.xpath("//button[@type ='submit']"));
+	elTwo.click();
+    WebElement elThree = driver.findElement(By.xpath("//(@contains(text(),'Employee List'"));
+    WebElement elFour = driver.findElement(By.className("oxd-input oxd-input--active"));
+    elFour.sendKeys("0016");
+    WebElement elFive = driver.findElement(By.className("oxd-icon bi-caret-down-fill oxd-select-text--arrow"));
+    //WebElement elFive = driver.findElement(By.className(""));
+
+	Thread.sleep(7000);
+	
+	
+}
+}
