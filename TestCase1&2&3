@@ -1,0 +1,96 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class SameWebSite {
+	 WebDriver driver;
+	public void setUp(){
+	
+		String key = "webdriver.chrome.driver";
+		String path = "C:\\Users\\varsi\\OneDrive\\Desktop\\B7 Selenium\\chromedriver.exe";
+		
+
+		System.setProperty(key, path);
+		// open browser
+		driver = new ChromeDriver();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		// maximize window
+		driver.manage().window().maximize();
+		
+		
+	}
+	public void rightClickTest() throws InterruptedException {
+		
+		driver.get("http://demo.guru99.com/test/simple_context_menu.html");
+		
+		WebElement el = driver.findElement(By.xpath("//*[contains(text(), 'right click')]"));
+		//el.click();
+		//String expText = "You have done a right click";
+		
+		
+		Actions action = new Actions(driver);
+		
+		action.contextClick(el).build().perform();
+		WebElement elOne = driver.findElement(By.xpath("//*[text()= 'Copy']"));
+		elOne.click();
+		Alert alert = driver.switchTo().alert();
+		
+		String alertText = alert.getText();
+		System.out.println("Text: " + alertText);
+		alert.accept();
+		Thread.sleep(9000);
+		driver.quit();
+	}
+	public void DoubleClickMe() throws InterruptedException {
+		driver.get("http://demo.guru99.com/test/simple_context_menu.html");
+		WebElement el = driver.findElement(By.xpath("//*[contains(text(), 'Double-Click Me')]"));
+        Actions action = new Actions(driver);
+		
+		action.doubleClick(el).build().perform();
+		Alert alert = driver.switchTo().alert();
+		String alertText =alert.getText();
+		System.out.println("Text: " + alertText);
+		
+		Thread.sleep(7000);
+		driver.quit();
+		
+	}
+	public void DragAndDrop() throws InterruptedException {
+		driver.get("http://dhtmlgoodies.com/scripts/drag-drop-custom/demo-drag-drop-3.html");
+		WebElement el = driver.findElement(By.id("box1"));
+		WebElement e2 = driver.findElement(By.id("box2"));
+		WebElement e3 = driver.findElement(By.id("box3"));
+		WebElement e4 = driver.findElement(By.id("box4"));
+		WebElement e5 = driver.findElement(By.id("box5"));
+		WebElement e6 = driver.findElement(By.id("box6"));
+		WebElement e7 = driver.findElement(By.id("box7"));
+		WebElement e11 = driver.findElement(By.id("box101"));
+		WebElement e22 = driver.findElement(By.id("box102"));
+		WebElement e33 = driver.findElement(By.id("box103"));
+		WebElement e44 = driver.findElement(By.id("box104"));
+		WebElement e55 = driver.findElement(By.id("box105"));
+		WebElement e66 = driver.findElement(By.id("box106"));
+		WebElement e77 = driver.findElement(By.id("box107"));
+		Actions action = new Actions(driver);
+		////div[@class='dragableBoxRight']
+		//action.dragAndDrop(el,).build().perform();
+		action.clickAndHold(el).moveToElement(e11).release().build().perform();
+		action.clickAndHold(e2).moveToElement(e22).release().build().perform();
+		action.clickAndHold(e3).moveToElement(e33).release().build().perform();
+		action.clickAndHold(e4).moveToElement(e44).release().build().perform();
+		action.clickAndHold(e5).moveToElement(e55).release().build().perform();
+		action.clickAndHold(e6).moveToElement(e66).release().build().perform();
+		action.clickAndHold(e7).moveToElement(e77).release().build().perform();
+		Thread.sleep(1000);
+		driver.close();
+		
+		
+	}
+	
+}
