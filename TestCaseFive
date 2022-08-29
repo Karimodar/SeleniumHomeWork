@@ -1,0 +1,67 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+public class TestCaseFive {
+
+	public static void main(String[] args) throws InterruptedException {
+		String key = "webdriver.chrome.driver";
+		String path = "C:\\Users\\varsi\\OneDrive\\Desktop\\B7 Selenium\\chromedriver.exe";
+		String url = "https://opensource-demo.orangehrmlive.com";
+
+		System.setProperty(key, path);
+		WebDriver driver = new ChromeDriver();
+		// open browser
+		driver = new ChromeDriver();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		// maximize window
+		driver.manage().window().maximize();
+		driver.get(url);
+		
+		driver.findElement(By.xpath("//*[@placeholder = 'Username']")).sendKeys("Admin");
+		driver.findElement(By.xpath("//*[@placeholder = 'Password']")).sendKeys("admin123");
+		driver.findElement(By.xpath("//button[@type ='submit']")).click();
+		driver.findElement(By.xpath("//div[@class='oxd-grid-4 orangehrm-full-width-grid']/div[2]//input")).sendKeys("0016");
+		WebElement empStatus = driver.findElement(By.xpath("//*[@tabindex='0']"));
+		Select select = new Select(empStatus);
+		select.selectByIndex(4);
+		WebElement currentEmp = driver.findElement(By.xpath("//*[contains(text(),'Current Employees')]"));
+		select.selectByIndex(1);
+		WebElement subUnit = driver.findElement(By.xpath("//*[contains(@class,'oxd-icon bi-caret-down-fill oxd-select-text--arrow')]"));
+		select.selectByIndex(1);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		WebElement textElement = driver.findElement(By.xpath("//*[contains(text(),'Linda Jane')]"));
+		String expfName="Linda Jane";
+		String actfName = textElement.getText();
+		Assert.assertEquals(actfName,expfName , "First Name verification failed");
+		WebElement lastName = driver.findElement(By.xpath("//*[contains(text(),'Anderson')]"));
+		String explName="Anderson";
+		String actlName = lastName.getText();
+		Assert.assertEquals(actfName,expfName , "Last Name verification failed");
+		WebElement JobTitle = driver.findElement(By.xpath("//*[contains(text(),'Sales & Marketing')]"));
+		String expJobTitle="VP - Sales & Marketing";
+		String actJobTitle = JobTitle.getText();
+		Assert.assertEquals(actJobTitle,expJobTitle , "JobTitle verification failed");
+		WebElement EmpStatus = driver.findElement(By.xpath("//*[contains(text(),'Full-Time Permanent')]"));
+		String expEmpStatus="Full-Time Permanent";
+		String actEmpStatus = JobTitle.getText();
+		Assert.assertEquals(actEmpStatus,expEmpStatus, "Employement Status verification failed");
+		String subUnitValue= subUnit.getText();
+		int SubUnitSize = subUnitValue.length();
+		System.out.println(SubUnitSize);
+		WebElement supervisor = driver.findElement(By.xpath("//div[contains(text(),'Administration')]"));
+		String supervisorName = supervisor.getText();
+		System.out.println(supervisorName);
+		Thread.sleep(7000);
+		driver.close();
+       
+
+		Thread.sleep(5000);
+	}
+}
